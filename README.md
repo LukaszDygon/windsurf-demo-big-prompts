@@ -40,25 +40,6 @@ python app.py
 
 This application was built using Cascade, an AI coding assistant, through a series of prompts. The original prompts used to create this application can be found in `demo_prompts.txt`. These prompts showcase:
 
-- Initial application setup and structure
-- Weather data integration
-- Boid simulation implementation
-- Testing setup and execution
-- UI styling and improvements
-- Error handling and data validation
-
-The prompts demonstrate how complex features can be built iteratively using AI assistance while maintaining code quality and proper testing practices.
-
-To understand how each feature was developed:
-1. Review the prompts chronologically in `demo_prompts.txt`
-2. Each prompt corresponds to specific commits in the repository
-3. The prompts show the thought process and requirements that led to the current implementation
-
-This documentation of the development process can be valuable for:
-- Understanding the application's architecture
-- Learning how to effectively use AI coding assistants
-- Seeing how features evolved through iterations
-- Following best practices in test-driven development
 
 ## Tech Stack 🤙
 
