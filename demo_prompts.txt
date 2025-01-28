@@ -1,0 +1,138 @@
+APP: 
+Create a Flask-based Windsurf Weather Application with the following components:
+ 
+1. Backend (Flask):
+- Implement Flask server for routing and API handling
+- Create endpoints for weather data fetching
+- Handle environment variables for API keys
+ 
+2. Core Weather Features:
+- Use OpenWeather API One Call API 3.0 for weather data
+- API Call Format:
+  * Endpoint: https://api.openweathermap.org/data/3.0/onecall
+  * Parameters:
+- lat={latitude}
+- lon={longitude}
+- appid={API key}
+- units=metric
+- exclude=minutely
+* Example: https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=minutely&appid={API key}&units=metric
+ 
+- Display Data:
+  * Current conditions:
+- Temperature
+- Wind speed and direction
+- Humidity
+- Weather description
+- Weather icon
+  * 48-hour forecast:
+- Hourly temperature
+- Hourly wind speed and direction
+- Hourly weather conditions
+- Time stamps and date in local time
+ 
+3. Map Integration:
+- Use OpenStreetMap with Leaflet.js
+-Allow location selection via map click
+-Show current selected location marker
+- Enable map zooming and panning
+- Include map attribution for OpenStreetMap
+ 
+4. UI Features:
+- Clean, modern interface
+- Responsive design for all screen sizes
+- Two main components:
+  * Current conditions dashboard
+  * 48-hour forecast timeline
+- Interactive map
+- Loading indicators for API calls
+- Error handling messages
+ 
+5. Technical Implementation:
+- Use ES6 modules for code organization
+- Handle window resizing
+- Use event listeners for user interaction
+- Store API key in .env file
+- Implement proper error handling for API calls
+- Cache weather data appropriately
+ 
+6. File Structure:
+/
+- app.py: Flask application
+- requirements.txt: Python dependencies
+- .env: Environment variables
+- .gitignore: Git ignore file
+ 
+/static/js/
+- weather.js: Weather data and conditions
+- map.js: OpenStreetMap/Leaflet initialization
+- ui.js: UI rendering functions
+- utils.js: Utility functions
+ 
+/static/css/
+- styles.css: Application styles
+ 
+/templates/
+- index.html: Main application template
+ 
+8. JavaScript Dependencies:
+- Leaflet.js for map functionality
+- No other external JS dependencies required
+ 
+9. Environment Variables (.env):
+FLASK_APP=app.py
+FLASK_ENV=development
+OPENWEATHER_API_KEY=your_api_key_here
+ 
+10. API Response Format:
+The One Call API returns:
+- current: Object containing current weather data
+- hourly: Array of 48 hourly forecasts
+  * Each hour contains:
+- dt: Timestamp for the data point
+- temp: Temperature in Celsius
+- wind_speed: Wind speed in meters/sec
+- wind_deg: Wind direction in degrees
+- humidity: Humidity percentage
+- weather: Array with condition description and icon
+-Daily
+-alerts
+
+Boids:
+
+Create an interactive windsurfer-themed boid simulation with the following features:
+1.Visual Elements:
+•Canvas background with windsurfer-styled boids
+•Each boid should have a surfboard base and a sail
+•Boids should rotate to face their direction of movement
+•Add a toggle button to switch between simulation and weather view
+2.Boid Behavior:
+•Implement flocking algorithm with alignment, cohesion, and separation
+•Add cursor avoidance that makes boids flee when cursor gets too close
+•Increase speed when avoiding cursor
+•Wrap around screen edges smoothly
+•Set base speed to 4 and panic speed to 8
+•Use an avoidance radius of 100 pixels
+3.Speech Bubbles:
+•Add surfer-themed phrases with emojis (about 30 different phrases)
+•Make bubbles appear randomly above boids with 1% chance per second
+•Style as modern speech bubbles with 60% opacity
+•Include smooth fade in/out animations
+•Make bubbles follow their boid'smovement
+•Add a tail pointer to indicate which boidis speaking
+•Display for 5 seconds before fading out
+•Ensure bubbles appear above the canvas
+4.Technical Requirements:
+•UserequestAnimationFrame for smooth animation
+•Implement proper cleanup of DOM elements
+•Handle window resizing
+•Use CSS transforms for better performance
+•Maintain proper z-index layering
+•Add event listeners for cursor tracking
+•Initialize with 30 boids
+5.Styling:
+•Clean, modern UI with smooth transitions
+•Responsive design that works at any screen size
+•Semi-transparent speech bubbles with shadow effects
+•Proper spacing and positioning of all elements
+The simulation should create a fun, interactive experience that combines flocking behavior with surfer culture, making the boids feel like a group of friendly surfers sharing their excitement.
