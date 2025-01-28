@@ -1,0 +1,25 @@
+{
+  "name": "lnl-windsurf-demo",
+  "version": "1.0.0",
+  "description": "A gnarly Flask application that combines real-time weather data with an interactive windsurfer simulation. Built with surfer vibes and modern web technologies.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.x",
+    "@babel/preset-env": "^7.x",
+    "babel-jest": "^29.x",
+    "jest": "^29.x",
+    "jest-environment-jsdom": "^29.x"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "moduleDirectories": ["node_modules", "src"],
+    "setupFiles": ["./jest.setup.js"]
+  }
+}

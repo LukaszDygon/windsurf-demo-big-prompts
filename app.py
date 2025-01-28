@@ -15,6 +15,10 @@ OPENWEATHER_API_KEY = os.getenv('OPENWEATHER_API_KEY')
 def index():
     return render_template('index.html')
 
+@app.route('/boids')
+def boids():
+    return render_template('boids.html')
+
 @app.route('/api/weather/<lat>/<lon>')
 def get_weather(lat, lon):
     """Get current weather data for given coordinates"""
