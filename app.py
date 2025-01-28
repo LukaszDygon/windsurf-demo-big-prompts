@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 import os
 import requests
 from dotenv import load_dotenv
@@ -15,14 +15,13 @@ OPENWEATHER_API_KEY = os.getenv('OPENWEATHER_API_KEY')
 def index():
     return render_template('index.html')
 
-@app.route('/boids')
-def boids():
-    return render_template('boids.html')
-
-@app.route('/api/weather/<lat>/<lon>')
-def get_weather(lat, lon):
-    """Get current weather data for given coordinates"""
-    base_url = "https://api.openweathermap.org/data/3.0/onecall"
+@app.route('/weather')
+def get_weather():
+    lat = request.args.get('lat', '40.7128')  # Default to New York
+    lon = request.args.get('lon', '-74.0060')
+    
+    # OpenWeather API endpoint
+    url = f'https://api.openweathermap.org/data/3.0/onecall'
     
     params = {
         'lat': lat,
@@ -33,7 +32,7 @@ def get_weather(lat, lon):
     }
     
     try:
-        response = requests.get(base_url, params=params)
+        response = requests.get(url, params=params)
         response.raise_for_status()
         return jsonify(response.json())
     except requests.RequestException as e:

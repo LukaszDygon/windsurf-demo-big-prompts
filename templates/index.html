@@ -3,143 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rad Windsurf Vibes 🏄‍♂️</title>
+    <title>Rad Windsurf Weather Tracker</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .speech-bubble {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 1rem;
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-            pointer-events: none;
-            transition: opacity 0.3s ease-in-out;
-            z-index: 50;
-        }
-        .speech-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 10px 10px 0;
-            border-style: solid;
-            border-color: rgba(255, 255, 255, 0.6) transparent transparent;
-        }
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-        #boids-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .content-container {
-            position: relative;
-            z-index: 10;
-        }
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .toggle-slider {
-            background-color: #2196F3;
-        }
-        input:checked + .toggle-slider:before {
-            transform: translateX(26px);
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<body class="bg-gray-100">
-    <div id="canvas-container">
-        <canvas id="boids-canvas"></canvas>
-    </div>
-    
-    <div class="content-container">
-        <div class="container mx-auto px-4 py-8">
-            <header class="text-center mb-8">
-                <h1 class="text-4xl font-bold text-gray-800">🏄‍♂️ Catch The Perfect Wave, Brah! 🌊</h1>
-                <p class="text-gray-600 mt-2">Scope out the gnarly conditions before you shred!</p>
-            </header>
-            
-            <div class="flex items-center justify-center mb-8 gap-4">
-                <span class="text-gray-700 font-medium">Weather View</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="view-toggle">
-                    <span class="toggle-slider"></span>
-                </label>
-                <span class="text-gray-700 font-medium">Surfer Vibes</span>
-            </div>
-            
-            <main class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div id="map" class="h-[500px] rounded-lg shadow-lg"></div>
-                
-                <div class="weather-dashboard space-y-8">
-                    <div class="current-conditions bg-white rounded-lg shadow-lg p-6">
-                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Current Vibes 🤙</h2>
-                        <div id="current-weather" class="space-y-4">
-                            <div class="weather-icon-large text-center mb-4">
-                                <img id="current-weather-icon" src="" alt="Weather Icon" class="w-24 h-24 mx-auto hidden">
-                            </div>
-                            <div class="weather-data space-y-2">
-                                <p class="text-lg"><span class="font-medium">Heat Level:</span> <span id="temperature" class="text-blue-600">--</span>°C</p>
-                                <p class="text-lg"><span class="font-medium">Wind Power:</span> <span id="wind-speed" class="text-blue-600">--</span> m/s</p>
-                                <p class="text-lg"><span class="font-medium">Wind Flow:</span> <span id="wind-direction" class="text-blue-600">--</span>°</p>
-                                <p class="text-lg"><span class="font-medium">Moisture:</span> <span id="humidity" class="text-blue-600">--</span>%</p>
-                                <p class="text-lg"><span class="font-medium">Scene:</span> <span id="weather-description" class="text-blue-600">--</span></p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="forecast bg-white rounded-lg shadow-lg p-6">
-                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Future Waves Forecast 🌊</h2>
-                        <p class="text-gray-600 mb-4">Check out what's rolling in, dude!</p>
-                        <div id="hourly-forecast" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
-                    </div>
+<body>
+    <div class="container">
+        <button id="toggleView" class="toggle-button">Switch to Surf Vibes 🏄‍♂️</button>
+        <div class="sidebar">
+            <div class="current-conditions">
+                <h2>Current Vibes</h2>
+                <div id="current-weather">
+                    <div class="weather-item">Temp Gauge: <span id="temperature">--</span>°C</div>
+                    <div class="weather-item">Wind Flow: <span id="wind-speed">--</span> m/s</div>
+                    <div class="weather-item">Wind's Comin' From: <span id="wind-direction">--</span>°</div>
+                    <div class="weather-item">Moisture Level: <span id="humidity">--</span>%</div>
+                    <div class="weather-item">Beach Status: <span id="weather-description">--</span></div>
                 </div>
-            </main>
-            
-            <footer class="text-center mt-8 text-gray-600">
-                <p>🏄‍♂️ Stay stoked and ride the waves! 🤙</p>
-            </footer>
+            </div>
+            <div class="hourly-forecast">
+                <h2>Upcoming Sesh Forecast</h2>
+                <div id="hourly-weather"></div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div id="boidContainer" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+                <canvas id="boidCanvas"></canvas>
+            </div>
+            <div id="map"></div>
         </div>
     </div>
 
@@ -147,5 +38,26 @@
     <script src="{{ url_for('static', filename='js/map.js') }}"></script>
     <script src="{{ url_for('static', filename='js/weather.js') }}"></script>
     <script src="{{ url_for('static', filename='js/boids.js') }}"></script>
+    <script>
+        let boidSim;
+        document.getElementById('toggleView').addEventListener('click', function() {
+            const map = document.getElementById('map');
+            const boidContainer = document.getElementById('boidContainer');
+            const button = document.getElementById('toggleView');
+            
+            if (boidContainer.style.display === 'none') {
+                boidContainer.style.display = 'block';
+                map.style.display = 'none';
+                button.textContent = 'Show Weather Map 🗺️';
+                if (!boidSim) {
+                    boidSim = new BoidSimulation();
+                }
+            } else {
+                boidContainer.style.display = 'none';
+                map.style.display = 'block';
+                button.textContent = 'Switch to Surf Vibes 🏄‍♂️';
+            }
+        });
+    </script>
 </body>
 </html>

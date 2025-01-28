@@ -1,64 +1,62 @@
-// Weather descriptions
-function getWindDescription(speed) {
-    if (speed < 5) return 'Totally flat';
-    if (speed < 10) return 'Perfect for beginners';
-    if (speed < 20) return 'Epic conditions';
-    if (speed < 30) return 'Radical! Expert only!';
-    return 'Too gnarly!';
-}
-
-function getSurferDescription(description) {
-    if (description.includes('clear')) return 'Epic blue skies, brah! ☀️';
-    if (description.includes('cloud')) return 'Some clouds in the mix 🌥';
-    if (description.includes('rain')) return 'Wet session ahead! 🌧';
-    return 'Checking out the scene, brah! 🏄‍♂️';
-}
-
-function formatTime(timestamp) {
-    const date = new Date(timestamp * 1000);
-    return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-}
-
-// Function to update weather display
-async function updateWeather(lat, lon) {
+// Function to fetch weather data from the backend
+async function fetchWeatherData(lat, lon) {
     try {
-        const response = await fetch(`/api/weather/${lat}/${lon}`);
-        if (!response.ok) throw new Error('Weather data fetch failed');
-        
+        const response = await fetch(`/weather?lat=${lat}&lon=${lon}`);
         const data = await response.json();
         
-        // Update current weather
-        document.getElementById('temperature').textContent = Math.round(data.current.temp);
-        document.getElementById('wind-speed').textContent = Math.round(data.current.wind_speed);
-        document.getElementById('wind-direction').textContent = data.current.wind_deg;
-        document.getElementById('humidity').textContent = data.current.humidity;
-        document.getElementById('weather-description').textContent = getSurferDescription(data.current.weather[0].description);
-        
-        // Update weather icon
-        const iconElement = document.getElementById('current-weather-icon');
-        iconElement.src = `https://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`;
-        iconElement.classList.remove('hidden');
-        
-        // Update hourly forecast
-        const hourlyForecast = document.getElementById('hourly-forecast');
-        hourlyForecast.innerHTML = ''; // Clear existing forecast
-        
-        data.hourly.slice(0, 24).forEach(hour => {
-            const forecastItem = document.createElement('div');
-            forecastItem.className = 'forecast-item bg-white p-4 rounded-lg shadow text-center';
-            forecastItem.innerHTML = `
-                <p class="text-sm text-gray-600">${formatTime(hour.dt)}</p>
-                <img src="https://openweathermap.org/img/wn/${hour.weather[0].icon}.png" 
-                     alt="${hour.weather[0].description}"
-                     class="w-10 h-10 mx-auto">
-                <p class="text-lg font-semibold">${Math.round(hour.temp)}°C</p>
-            `;
-            hourlyForecast.appendChild(forecastItem);
-        });
+        if (response.ok) {
+            updateCurrentWeather(data.current);
+            updateHourlyForecast(data.hourly);
+        } else {
+            console.error('Error fetching weather data:', data.error);
+        }
     } catch (error) {
-        console.error('Error updating weather:', error);
+        console.error('Failed to fetch weather data:', error);
     }
 }
 
+// Update current weather display
+function updateCurrentWeather(current) {
+    if (!current) return;
+    
+    document.getElementById('temperature').textContent = current.temp ? Math.round(current.temp) : '--';
+    document.getElementById('wind-speed').textContent = current.wind_speed || '--';
+    document.getElementById('wind-direction').textContent = current.wind_deg || '--';
+    document.getElementById('humidity').textContent = current.humidity || '--';
+    document.getElementById('weather-description').textContent = 
+        current.weather && current.weather[0] ? current.weather[0].description : '--';
+}
+
+// Update hourly forecast display
+function updateHourlyForecast(hourlyData) {
+    const hourlyContainer = document.getElementById('hourly-weather');
+    hourlyContainer.innerHTML = '';
+
+    // Display next 24 hours
+    hourlyData.slice(0, 24).forEach((hour, index) => {
+        const time = new Date(hour.dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        const hourlyItem = document.createElement('div');
+        hourlyItem.className = 'hourly-item';
+        hourlyItem.innerHTML = `
+            <div>Sesh Time: ${time}</div>
+            <div>Temp Gauge: ${Math.round(hour.temp)}°C</div>
+            <div>Wind Flow: ${hour.wind_speed} m/s, ${hour.wind_deg}°</div>
+            <div>Beach Status: ${hour.weather[0].description}</div>
+        `;
+        
+        hourlyContainer.appendChild(hourlyItem);
+    });
+}
+
+// Fetch initial weather data for default location
+document.addEventListener('DOMContentLoaded', () => {
+    fetchWeatherData(40.7128, -74.0060);  // Default to New York
+});
+
 // Export functions for testing
-export { updateWeather, formatTime, getWindDescription, getSurferDescription };
+module.exports = {
+    fetchWeatherData,
+    updateCurrentWeather,
+    updateHourlyForecast
+};

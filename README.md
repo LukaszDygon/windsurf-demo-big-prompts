@@ -1,119 +1,44 @@
-# 🏄‍♂️ Radical Windsurf Weather App
+# Totally Rad Windsurf Weather Tracker 🏄‍♂️
 
-A gnarly Flask application that combines real-time weather data with an interactive windsurfer simulation. Built with surfer vibes and modern web technologies.
+Yo dude! Welcome to the most gnarly weather app for catching those sweet wind vibes! Built with Flask and some other rad tech, this app helps you track the perfect conditions for your next epic sesh.
 
-## ✨ Features
+## Sick Features 🌊
 
-- **Weather Dashboard**
-  - Real-time weather conditions with surfer-friendly language
-  - Interactive map for location selection
-  - 24-hour forecast with weather icons
-  - Wind speed and direction indicators
+- Interactive map that's totally clickable
+- Real-time beach vibes display
+- Hourly forecast to plan your next shred
+- Wind speed and direction for maximum stoke
+- Killer modern interface that works everywhere
+- OpenWeatherMap integration for the most tubular data
 
-- **Surfer Simulation**
-  - Interactive boid simulation with windsurfer-themed elements
-  - Dynamic flocking behavior
-  - Cursor-avoiding surfers
-  - Random surfer phrases with speech bubbles
-  - Toggle between weather view and surfer simulation
+## Getting Started 🌴
 
-## 🚀 Quick Start
-
-1. **Clone and Install**
-   ```bash
-   git clone [your-repo-url]
-   cd windsurf-weather-app
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   pip install -r requirements.txt
-   npm install  # Install JavaScript dependencies
-   ```
-
-2. **Configure API Key**
-   ```bash
-   # Create .env file and add your OpenWeather API key
-   echo "OPENWEATHER_API_KEY=your_api_key_here" > .env
-   ```
-
-3. **Run the App**
-   ```bash
-   python app.py
-   ```
-
-4. Open `http://localhost:5000` in your browser
-
-## 🧪 Testing
-
-The application includes a comprehensive test suite using Jest for JavaScript testing.
-
-### Running Tests
-
+1. Install the good stuff:
 ```bash
-# Run tests once
-npm test
-
-# Run tests in watch mode (for development)
-npm run test:watch
+pip install -r requirements.txt
 ```
 
-### Test Coverage
-
-- **Weather Module Tests**
-  - API integration and data fetching
-  - DOM updates and weather display
-  - Time formatting and data conversion
-  - Wind speed descriptions
-  - Weather condition descriptions in surfer lingo
-  - Error handling
-
-### Test Structure
-
+2. Drop your secret OpenWeatherMap key in a `.env` file (keep it secret, keep it safe):
 ```
-static/js/
-├── __tests__/
-│   └── weather.test.js    # Weather module tests
-├── weather.js             # Weather functionality
-└── ...
+OPENWEATHER_API_KEY=your_api_key_here
 ```
 
-### Testing Stack
+3. Fire it up:
+```bash
+python app.py
+```
 
-- **Jest**: Testing framework
-- **JSDOM**: DOM environment simulation
-- **Babel**: JavaScript transpilation
-- **Mock Functions**: API and DOM manipulation testing
+4. Hang ten to `http://localhost:5000` in your browser
 
-## 🛠 Tech Stack
+## How to Shred 🏄‍♂️
 
-- **Backend**: Flask 3.0.0
-- **APIs**: OpenWeather API
-- **Frontend**: 
-  - Tailwind CSS for styling
-  - Leaflet.js for maps
-  - Canvas API for boid simulation
-- **Testing**:
-  - Jest 29.x
-  - JSDOM for DOM testing
-- **Dependencies**: See `requirements.txt` and `package.json`
+- Click anywhere on the map to catch the weather vibes
+- Peep the current conditions in the sidebar
+- Scroll through the next 24 hours of radical forecasts
 
-## 🌊 Usage
+## Tech Stack 🤙
 
-1. Toggle between Weather View and Surfer Vibes using the switch
-2. Click anywhere on the map to get weather data
-3. Watch the surfers react to your cursor movement
-4. Enjoy the rad weather forecasts with surfer slang!
-
-## 📝 License
-
-MIT License - Hang loose! 🤙
-
-## 🤝 Contributing
-
-Feel free to contribute to this radical project! Open an issue or submit a PR, brah!
-
-### Development Guidelines
-
-1. Write tests for new features
-2. Ensure all tests pass before submitting PRs
-3. Follow the existing code style
-4. Keep the surfer vibes flowing! 🏄‍♂️
+- Backend: Flask (Python's coolest web framework)
+- Frontend: HTML, CSS, JavaScript (the holy trinity of web vibes)
+- Map: Leaflet.js (for those sweet map moves)
+- Weather Data: OpenWeatherMap API (keeping it real with the weather)

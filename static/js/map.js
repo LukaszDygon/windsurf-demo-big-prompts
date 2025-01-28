@@ -1,18 +1,15 @@
 // Initialize the map
-const map = L.map('map').setView([51.505, -0.09], 13);
+const map = L.map('map').setView([40.7128, -74.0060], 10);
 
 // Add OpenStreetMap tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// Add a marker for the selected location
-let marker = null;
-
-// Handle map click events
+// Add click handler to update weather data
+let marker;
 map.on('click', function(e) {
-    const lat = e.latlng.lat;
-    const lng = e.latlng.lng;
+    const { lat, lng } = e.latlng;
     
     // Update or create marker
     if (marker) {
@@ -23,13 +20,4 @@ map.on('click', function(e) {
     
     // Fetch weather data for clicked location
     fetchWeatherData(lat, lng);
-});
-
-// Enable map zooming and panning
-map.on('zoom', function() {
-    // Handle zoom events if needed
-});
-
-map.on('drag', function() {
-    // Handle drag events if needed
 });
