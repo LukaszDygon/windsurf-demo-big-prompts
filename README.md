@@ -38,7 +38,7 @@ python app.py
 
 ## Development History 🔄
 
-This application was built using Cascade, an AI coding assistant, through a series of prompts. The original prompts used to create this application can be found in `demo_prompts.txt`. These prompts showcase:
+This application was built using Cascade, an AI coding assistant, through a series of prompts. The 2 original prompts used to create this application can be found in `demo_prompts.txt`.
 
 
 ## Tech Stack 🤙
